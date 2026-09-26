@@ -19,9 +19,7 @@ public class GameService<T extends Game> {
 
     //CREATE
     public void save(T game){
-        if(game != null){
-            gameRepository.save(game);
-        }
+        gameRepository.save(game);
     }
     //READ
     public List<T> listAll(){
