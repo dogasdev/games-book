@@ -6,5 +6,6 @@ public enum Platform {
     PLAYSTATION,
     XBOX,
     NINTENDO,
-    ROCKSTAR;
+    ROCKSTAR,
+    RIOT_GAMES;
 }

@@ -10,6 +10,7 @@ import model.repositories.GameRepository;
 import model.services.GameService;
 import model.utility.InputValidator;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class MenuGame {
@@ -38,6 +39,7 @@ public class MenuGame {
     public void processOption(int option, Scanner userInput){
         switch (option){
             case 1 -> displayRegistration(userInput);
+            case 2 -> displayGamesInCatalog();
         }
     }
 
@@ -94,14 +96,28 @@ public class MenuGame {
 
             game = new DigitalGame(name, genre, platform);
             gameService.save(game);
-            System.out.println(game.getName() + "successfully added to the catalog.");
+            System.out.println(game.getName() + " successfully added to the catalog.");
         }else{
             System.out.print("Physical media items: ");
             int numberOfMediaItems = InputValidator.validateMediaItemsInput(userInput);
 
             game = new PhyicalGame(name, genre, numberOfMediaItems);
             gameService.save(game);
+            System.out.println(game.getName() + " sucessfully added to the catalog.");
         }
+    }
 
+    public void displayGamesInCatalog(){
+        List<Game> catalogedGames = gameService.listAll();
+
+        int counter = 1;
+        if(catalogedGames.isEmpty()){
+            System.out.println("ERROR: There are no games in the catalog.");
+            return;
+        }
+        for(Game game : catalogedGames){
+            System.out.println("[" + counter + "] \n" + game + "\n");
+            counter++;
+        }
     }
 }
