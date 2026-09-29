@@ -1,8 +1,6 @@
 package model.repositories;
 
-import model.entities.DigitalGame;
 import model.entities.Game;
-import model.enums.Platform;
 
 import java.util.ArrayList;
 import java.util.List;

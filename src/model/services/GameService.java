@@ -1,8 +1,6 @@
 package model.services;
 
-import model.entities.DigitalGame;
 import model.entities.Game;
-import model.entities.PhyicalGame;
 import model.enums.GameType;
 import model.repositories.GameRepository;
 
