@@ -10,4 +10,8 @@ public interface GameRepository<T extends Game> {
     void save(T game);
 
     List<T> findAll();
+
+    T findByName(String name);
+
+    void deleteGame(String name);
 }

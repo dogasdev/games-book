@@ -40,6 +40,10 @@ public class MenuGame {
         switch (option){
             case 1 -> displayRegistration(userInput);
             case 2 -> displayGamesInCatalog();
+            case 3 -> displaySearchByName(userInput);
+            case 4 -> displayFilterGamesByType(userInput);
+            case 5 -> displayUpdate(userInput);
+            case 6 -> displayDelete(userInput);
         }
     }
 
@@ -72,8 +76,6 @@ public class MenuGame {
         }
         System.out.print("What kind of game?\n- (Digital/Physical)");
         String typeChoice = userInput.nextLine().toUpperCase();
-
-        System.out.println("DEBUG: [" + typeChoice + "]");
 
         Game game;
 
@@ -119,5 +121,66 @@ public class MenuGame {
             System.out.println("[" + counter + "] \n" + game + "\n");
             counter++;
         }
+    }
+
+    public void displaySearchByName(Scanner userInput){
+        System.out.println("> Catalog Search <");
+        System.out.print("Enter the name to search for: ");
+        String name = userInput.nextLine();
+
+        Game searchResult = gameService.findByName(name);
+
+        if(searchResult == null){
+            System.out.println("ERROR: There is no game with this name in the catalog.");
+            return;
+        }
+
+        System.out.println("> FOUNDED GAME <\n" + searchResult);
+    }
+
+    public void displayFilterGamesByType(Scanner userInput){
+        System.out.println("> Filtred Search <");
+        System.out.print("Enter the type of game you want to search for: ");
+        String typeChoice = userInput.nextLine().toUpperCase();
+
+        while(!InputValidator.validateGameType(typeChoice)){
+            System.out.print("This type of game does not exist. Try again:");
+            typeChoice = userInput.nextLine().toUpperCase();
+        }
+
+        GameType type = GameType.valueOf(typeChoice);
+        List<Game> foundedGames = gameService.filterByType(type);
+        if(foundedGames.isEmpty()){
+            System.out.println("ERROR: No game of this type is registered.");
+            return;
+        }
+
+        System.out.println("FILTRED GAMES" + foundedGames.size());
+        for(Game game : foundedGames){
+            System.out.println(game + "\n");
+        }
+    }
+
+    public void displayUpdate(Scanner userInput){
+        System.out.println("> Changing game name <");
+        System.out.print("Enter the name of the game you want to change: ");
+        String currentName = userInput.nextLine();
+        System.out.print("Enter the new name: ");
+        String newName = userInput.nextLine();
+        while(!InputValidator.validateGameName(newName)){
+            System.out.print("Invalid name. Try again: ");
+            newName = userInput.nextLine();
+        }
+
+        gameService.updateName(currentName, newName);
+    }
+
+    public void displayDelete(Scanner userInput){
+        System.out.println("> Deletion of game <");
+        System.out.print("Enter the name of the game you want to delete: ");
+        String name = userInput.nextLine();
+
+        gameService.deleteGame(name);
+        System.out.println("Game successfully deleted");
     }
 }

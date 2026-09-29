@@ -17,4 +17,19 @@ public class GameImplements implements GameRepository<Game>{
     public List<Game> findAll(){
         return listGames;
     }
+
+    public Game findByName(String name){
+        List<Game> foundedGame = findAll();
+
+        for(Game game : foundedGame){
+            if(game.getName().equals(name)){
+                return game;
+            }
+        }
+        return  null;
+    }
+
+    public void deleteGame(String name){
+        listGames.removeIf(game -> game.getName().equals(name));
+    }
 }

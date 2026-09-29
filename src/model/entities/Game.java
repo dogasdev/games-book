@@ -1,6 +1,7 @@
 package model.entities;
 
 import model.enums.GameType;
+import model.utility.InputValidator;
 
 import java.util.UUID;
 
@@ -20,7 +21,7 @@ public abstract class Game {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name){
         this.name = name;
     }
 
